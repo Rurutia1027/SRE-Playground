@@ -1,5 +1,18 @@
 # What's IAC
 
+- **IaC: Provisioning and managing Infrastructure through code instead of manually.**
+![resources](./images/resources-pipeline.png)
+
+![Traditional Manual vs. IaC](./images/iac-1.png.png)
+
+- **Traditional Manually Console Operation Issues**
+  * Hard to reproduce large infrastructure.
+  * Hard to track and revert changes. 
+  * Imperative rather than declarative. 
+  * Very error-prone in terms of configuration. 
+
+
+
 **Infrastructure as Code(IaC)** is a practice in DevOps where infrastructure configurations are managed and provisioned using code. This approach replaces manual processes for configuring hardward or cloud resources, enabling: 
 
 - **Version Control**: Track changes to infrastructure like you do with application code. 
