@@ -38,9 +38,57 @@ There are series of IaC tools: **Terraform**, **AWS CloudFormation**, **Ansible*
 - **Plan and Apply**: Preview changes before applying them to our infrastructure. 
 
 ### Why Use Terraform? 
-* Simplifies multi-cloud deployments. 
-* Automatesz resource creation and scaling. 
-* Supports CI/CD for infrastructure. 
+
+Advantages of Terraform over other Infrastructure-as-Code tools.
+
+- **Platform-agnostic**: Terraform can be used with multiple providers, both in the cloud and on-premises.
+- **High-level abstraction**: Terraform can be used to manage resources across multiple providers.
+- **Modular Approach**: We can create modules grouping resources, and then combine and compose these modules to build a
+  bigger solution.
+- **Parallel Deployment**: Terraform builds a dependency graph of resources and supports parallel changes.
+- **Separation of plan and apply**: We can execute only plan commands to inspect the potential changes before actually
+  applying them.
+- **Resource protection & validation**: Terraform Provides several ways to protect resources against accidental changes
+  or deletion, as well as ways of validating the deployed infrastructure.
+- **State file**: Terraform is very fast due to its implementation of a state file, saving the entire snapshot of the
+  current deployment.
+
+### Terraform's Architecture
+
+![](./images/terraform-architecture.png)
+How does Terraform manage resources in so many different places?
+
+- **Terraform Providers**: allow Terraform to know how to interact with remote APIs.
+- **Providers** provide the logic to interact with upstream APIs:
+  - Read, create, update, and delete resources through that provider's API.
+- Anyone can write and publish a provider for a remote API, as long as it follows Terraform specifications.
+- We declare the necessary providers in the Terraform project configuration, and Terraform installs those providers
+  during initialization.
+
+### Terraform's Provisioning Infrastructure
+How does Terraform provision and manage infrastructure? 
+
+#### Phase of Plan 
+![](./images/phase-1-plan.png)
+* First of all we have our configuration file, and any previous state may already exist regarding infrastructures managed by terraform. 
+* Terraform then takes those {config files, state files} inputs and call the remote APIs to check for the current state of real-world objects. 
+* Then, the Terraform will receive the information from the provider's side about the real-world's current state of objects. 
+* After receiving the provider side's real world object's state, it will compare with the return data with both the state and the config files. 
+* If any differences are detected by the comparing stage, Terraform will output a plan of changes that gonna to be executed during the phase of Apply.  
+
+#### Phase of Apply 
+![](./images/phase-2-apply.png)
+* During phase of apply, Terraform first receives the **Plan** which is generated in previous **Plan Phase**. 
+* There should some resources' modifications in the Plan like Create, modify, or delete real-world objects, Terraform extract those changes and wrap the changes into request to interact with remote provider's APIs correspondingly .  
+* To the remote provider side, it receives the change requests and executes the changes, and then after successful change it will respond the successful reply messages back to the Terraform side. 
+* Then, after Terraform side receives the modify success messages it will save the current state to the **State** to consistent the current infrastructure state to disk or memory.  
+
+#### Phase of Destroy 
+![](./images/phase-3-destroy.png)
+* Creation, modification are stored in the **State** files, and during the phase of Destroy Terraform will first look into the State file for all the configurations.
+* Then Terraform will interact once again with the providers to execute the necessary API calls to delete real-world objects. 
+
+--- 
 
 ## What's AWS CloudFormation 
 **AWS CloudFormation** is a service provided by Amazon Web Service(AWS) that enables you to define and provision AWS resources using templates. It's AWS's native IaC tool.
