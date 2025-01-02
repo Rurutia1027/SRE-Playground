@@ -1,3 +1,8 @@
+# 1. Plan
+# 2. Apply
+# 3. Destroy
+
+
 # config block
 terraform {
   required_providers {
