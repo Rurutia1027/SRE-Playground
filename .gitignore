@@ -1,2 +1,3 @@
-aws/CLF-C-02/*.pdf
 .DS_Store
+/.idea/
+/SRE-Playground.iml
