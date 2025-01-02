@@ -1,3 +1,7 @@
 .DS_Store
 /.idea/
 /SRE-Playground.iml
+/practice-terraform/scripts/**/.terraform.lock.hcl
+/practice-terraform/scripts/**/terraform.tfstate
+/practice-terraform/scripts/**/terraform.tfstate.backup
+/practice-terraform/scripts/**/.terraform/

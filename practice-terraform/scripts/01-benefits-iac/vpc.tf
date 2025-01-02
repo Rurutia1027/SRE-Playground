@@ -17,6 +17,9 @@ provider "aws" {
 #  format after resource "${aws(provider's) resource name}" "the name you give to this to be created resource instance"
 resource "aws_vpc" "tf-demo-vpc" {
   cidr_block = "10.0.0.0/16"
+  tags = {
+    "Name" = "tf-demo-vpc"
+  }
 }
 
 # then, we create two instances of subnets public subnet and private subnet
