@@ -10,6 +10,12 @@
   * Hard to track and revert changes. 
   * Imperative rather than declarative. 
   * Very error-prone in terms of configuration. 
+  
+- **Terraform Benefits**
+  * IaC tools normally runs on a CI/CD environment. 
+  * Infrastructure is version controlled. 
+  * Easier to spot and fix configuration issues. 
+  * Declarative rather than imperative. 
 
 
 
