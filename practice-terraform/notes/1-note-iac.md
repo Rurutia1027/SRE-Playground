@@ -1,8 +1,6 @@
 # What's IAC
 
 - **IaC: Provisioning and managing Infrastructure through code instead of manually.**
-![resources](./images/resources-pipeline.png)
-
 ![Traditional Manual vs. IaC](./images/iac-1.png)
 
 - **Traditional Manually Console Operation Issues**
