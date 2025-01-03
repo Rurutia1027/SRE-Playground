@@ -159,4 +159,20 @@ There are two buckets for different purposes:
     vpc_id = aws_vpc.main.id 
   }
   ```
-  * A network module could handle creating a VPC, subnets, and other networking resources. 
+  * A network module could handle creating a VPC, subnets, and other networking resources.
+
+--- 
+
+## What Happens if Referenced External Resource(here the S3 bucket) Not Exists
+
+If that data block in Terraform does not create the resource -- it simply references an existing resource that must
+already be created by someone else or by another process. If the external bucket reference in the data block does not
+exist, Terraform will fail because it cannot find the resource.
+
+In our case, if the external bucket (`not-managed-by-us`) hasn't been created by someone else or bu another process, we
+won't be able to use the data `aws_s3_bucket` block successfully. We'd need to ensure that the bucket exists before
+running Terraform, either by manually creating it or by coordinating with whoever manages that infrastructure. 
+
+* Regarding dependencies in Terraform: 
+  * Resources in Terraform can depend on each other explicitly through the use of outputs and inputs or implicitly through references in resource blocks. 
+  * In this example, the external buckets does not create a dependency because it's only being referenced, not managed. 

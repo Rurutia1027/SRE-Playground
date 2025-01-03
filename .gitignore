@@ -4,3 +4,4 @@
 /practice-terraform/scripts/**/terraform.tfstate
 /practice-terraform/scripts/**/terraform.tfstate.backup
 /practice-terraform/scripts/**/.terraform/
+/.env
