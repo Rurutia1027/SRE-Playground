@@ -70,3 +70,41 @@ configuration files for development and production that will store the state in 
 * Make sure to destroy the resources after you complete all the steps.
 
 --- 
+
+## Migrate & Reconfigure 
+* Error Message Shown When Executing `terraform init -backend-config=dev.s3.tfbackend`:
+
+```text 
+Initializing the backend...
+╷
+│ Error: Backend configuration changed
+│ 
+│ A change in the backend configuration has been detected, which may require migrating existing state.
+│ 
+│ If you wish to attempt automatic migration of the state, use "terraform init -migrate-state".
+│ If you wish to store the current configuration with no changes to the state, use "terraform init -reconfigure".
+
+```
+This error message indicates that Terraform detected changes in the backend configuration, such as a different S3 bucket, key, or region.
+There are two options to solve this situation.
+
+### Migrate the State (`-migrate-state`)
+If we want to move the existing state file to the new backend (e.g., an updated S3 bucket or key), run this 
+```shell 
+terraform init -migrate-state 
+```
+
+- **What this does**
+  - Transfers the state file from the old backend (if any) to the new one specified in your backend configuraiton. 
+  - Ensures Terraform uses the updated backend moving forward. 
+
+### Reconfigure Without Migration (`-reconfigure`)
+If we do not need to migrate the state file (e.g., you're setting up a new environment or project), run this: 
+
+```shell
+terraform init -reconfigure 
+```
+
+- **What this does**
+  - Updates the Terraform configuration without attempting to move any existing state file
+  - Useful for starting fresh with a new backend configuration. 
