@@ -1,4 +1,4 @@
-# Using Data Source to Fetch AMI Information
+# Using Data Sources to Fetch AMI Information
 
 ## Introduction
 
