@@ -6,3 +6,7 @@
 /practice-terraform/scripts/**/.terraform.tfstate.lock.info
 /practice-terraform/scripts/**/.terraform/
 /.env
+/practice-terraform/projects/proj-01/scripts/.terraform/
+/practice-terraform/projects/proj-01/scripts/terraform.tfstate
+/practice-terraform/projects/proj-01/scripts/terraform.tfstate.backup
+/practice-terraform/projects/proj-01/scripts/.terraform.tfstate.lock.info
