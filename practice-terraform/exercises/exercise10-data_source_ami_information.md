@@ -111,3 +111,30 @@ Here is why this avoids returning multiple values:
     raise an error.
 
 --- 
+
+## Question: We can use `terraform output` command after `terraform apply` or `terraform init` Why?
+
+We can use `terraform output` command **after** **terraform apply** or (`terraform plan -out=<file>` and then
+`terraform apply <file>`). Here's why:
+
+### When terraform output works
+
+- After `terraform apply`: The `terraform output` command retrieves values from the Terraform state file, which is only
+  created or updated after a successful `terraform apply`(after the resources are applied via provider successfully will
+  the state of the resources be written to the state files). At this point, the resources and their outputs are fully
+  provisioned.
+
+- After State Initialization(`terraform init`): While `terraform init` sets up Terraform's backend and downloads
+  provider plugins, it doesn't create or update resources, so no state file with output exists yet. Consequently,
+  `terraform output`will not return any meaningful results. Actually `terraform output` command is designed to output *
+  *successfully applied resources**.   
+
+### Typical Usage
+
+```shell
+# print specified output item content 
+terraform output <output_name>
+
+# print all current terraform project's output items 
+terraform output 
+```

@@ -17,7 +17,7 @@ data "aws_ami" "ubuntu" {
 }
 
 # data source 2
-data "aws_caller_identify" "current" {}
+data "aws_caller_identity" "current" {}
 
 
 # data source 3
@@ -79,7 +79,7 @@ output "ubuntu_ami_data" {
 
 # this will expose inner current aws_caller_identity content to output contents on console
 output "aws_caller_identity" {
-  value = data.aws_caller_identify.current
+  value = data.aws_caller_identity.current
 }
 
 # this will expose inner current region value to output contents on console
