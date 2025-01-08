@@ -3,5 +3,6 @@
 /SRE-Playground.iml
 /practice-terraform/scripts/**/terraform.tfstate
 /practice-terraform/scripts/**/terraform.tfstate.backup
+/practice-terraform/scripts/**/.terraform.tfstate.lock.info
 /practice-terraform/scripts/**/.terraform/
 /.env
