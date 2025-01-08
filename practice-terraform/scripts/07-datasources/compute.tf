@@ -24,11 +24,13 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 # data source 4
-data "aws_vpc" "prod_vpc" {
-  tags = {
-    Env = "Prod"
-  }
-}
+# we need an extra external terraform hcl script to create this vpc instance
+# so that when current script is applied the vpc instance is already existing and we can use data source to fetch it
+# data "aws_vpc" "prod_vpc" {
+#   tags = {
+#     Env = "Prod"
+#   }
+# }
 
 # data source 4
 data "aws_availability_zones" "available" {
@@ -51,8 +53,8 @@ data "aws_iam_policy_document" "static_website" {
   }
 }
 
-resource "aws_s3_bucket" "public_read_bucket" {
-  bucket = "my-public-read-bucket"
+resource "aws_s3_bucket" "public_read_bucket2" {
+  bucket = "my-public-read-bucket2"
 }
 
 
@@ -68,9 +70,9 @@ output "azs" {
   value = data.aws_availability_zones.available
 }
 
-output "prod_vpc_id" {
-  value = data.aws_vpc.prod_vpc.id
-}
+# output "prod_vpc_id" {
+#   value = data.aws_vpc.prod_vpc.id
+# }
 
 
 output "ubuntu_ami_data" {
