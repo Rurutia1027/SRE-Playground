@@ -240,4 +240,36 @@ include the resources:
 * What happens to Module A's state file after the import ?
 * Does Module A's .tf file need to be manually updated after apply Project/Module B? 
 
+### Importing Resource X to Module B
 
+- **Action**: Run `terraform import` in **Module B** to import resource **X** into its state file. This assumes **Module
+  B's** .tf file is already updated to include a configuration for X.
+- **Effect on Module B**:
+  - Module B's **state file** is updated to include the resource X.
+  - Module B now "manages" resource X as part of its lifecycle.
+- **Effect on Module A**:
+  - **State file**: The resource **X** is **not automatically removed** form **Module A's** state file. This creates a *
+    *state drift** issue, where both modules might appear to manage the same resource unless resolved.
+  - **.tf file**: No changes occur automatically to **Module A's** .tf file. The resource configuration for X will still
+    exist unless manually removed.
+
+### Running `terraform apply` in Module B
+
+- **Action**: Run `terraform apply` in Module B to ensure that the resource X is fully managed by Module B and any
+  configuration changes are applied.
+
+- **Effect on Module B**:
+  - Any changes defined in Module B's .tf file for X are applied to the resource in the cloud.
+  - Module B's state file is updated to reflect the final state of resource X.
+- **Effect on Module A**:
+  - State file: Resource X remains in Module A's state file unless you explicitly remove it using `terraform state rm `.
+  - .tf file: The configuration for X in Module A's .tf file remain untouched. We must **manually remove the resource
+    configuration** for X from Module A to avoid conflicts.
+
+### Final Steps to Resolve Conflicts
+
+- **Remove Resource X from Module A's State File**:
+  - Use `terraform state rm ` in Module A to remove resource X from its state file:
+- **Manually Update Module A's .tf File***:
+  - Remove the resource block for X from Module A's .tf file to reflect that the resource is no longer managed by Module
+    A. 
