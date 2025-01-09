@@ -100,14 +100,144 @@ When using `terraform import`, the workflow should be:
 
 ### Case3: Replacing an Existing Resource in the Cloud Architecture
 
+- **Initial Scenario**:
+  - A resource is already defined in the .tf file and this resource is already managed by Terraform.
+  - However, the actual resource in the cloud (target resource) is different from the one current managed by Terraform.
+- **Goal**:
+  - Replace the current resource in Terraform's state file with the target resource in the cloud, ensuring Terraform
+    starts managing the target resource instead.
+- **Steps**:
+  - Update the .tf file:
+    - Modify the resource block in the .tf file to match the configuration of the target resource.
+    - Ensure the name, type, and attributes correspond to the target resource.
+  - Run `terraform import`:
+    - Use the `terraform import` command to replace the resource in the state file with the target resource from the
+      cloud.
+    - ```shell
+       terraform import aws_security_group.target_sg sg-0abcd1234efgh5678
+       # sg-0abcd1234efgh5678 is the target resource already deployed and running on the cloud side
+       # target_sg is the resource name declared in the .tf file with resource type of aws_security_group
+      ```
+  - **Verify Configuration** with command `terraform plan`:
+    - Check for discrepancies between the updated .tf file and the imported resources.(whether their types are match,
+      whether the resource is active and can be fetched from current region such kind of things)
+    - Make any necessary adjustments in the .tf file.
+  - **Run** `terraform apply`:
+    - Apply the changes to ensure the state file, .tf configuration, and cloud infrastructure are fully synchronized.
+
 ### Case4: Moving Resources Between Modules
+
+- **Scenario**:
+  - A resource was originally declared outside a module but needs to be moved into a module for better organization for
+    modularization.
+  - For example, moving an `aws_instance` resource from the root module to a nested module.
+- **Steps**:
+  - Write the resource configuration in the module with the same attributes and settings as the original resource.
+  - Run `terraform import` to import the resource into the module's namespace using the use address, e.g.,
+    `module.<module_name>.aws_instace.example`.
+  - Run `terraform plan` to verify no unintended changes.
+  - Apply the changes to update Terraform's state and confirm the resource is managed within the module.
 
 ### Case5: Partial Import for Modular Resources
 
+- **Scenario**:
+  - You're importing a resource that is part of a larger system but only need to manage specific attributes or
+    components in Terraform.
+    - For example, importing an `aws_s3_bucket` resource without importing its associated bucket policy.
+- **Steps**:
+  - Write the configuration for the specific resource (e.g., S3 bucket) you want to manage in the .tf file.
+  - Import only that resource into the Terraform state, ignoring associated resources for now.
+  - Apply changes to ensure the configuration is in sync with the state.
+  - Gradually add the remaining resources (e.g., bucket policy) if needed, using additional imports and configuration
+    blocks.
+
 ### Case6: Handling State Drift
+
+- **Scenario**:
+  - The actual state of a resource in the cloud has drifted from Terraform's state, causing `terraform plan` to show
+    unintended changes.
+  - For example, someone manually updates an EC2 instance's security group in the AWS Console.
+- **Steps**:
+  - Use `terraform import` to re-sync the resource's actual state with Terraform's state file.
+  - Review the drift using `terraform plan`.
+  - Update the .tf file to align with the current configuration, or override the drift by reapplying the desired
+    configuration.
+  - Apply changes to finalize the alignment.
 
 ### Case7: Splitting / Combining State Files
 
+- **Scenario**:
+  - Large Terraform projects may benefit from splitting state files by resource type or environment (e.g., separating
+    production and staging).
+  - Conversely, multiple state files might need to be combined for central management.
+
+- **Steps for Splitting**:
+  - **Identify Resource to Split**:
+    - Decide which resources will be moved to a new state/project.
+    - Ensure you understand all the dependencies and associations of these resources.
+  - **Prepare the New Configuration**:
+    - Before removing the resource from the current state file, prepare a new .tf file (e.g., split-small.tf) with the
+      resource declarations.
+    - Ensure the new configuration matches the resource's current state.
+  - **Remove from the Current State**:
+    - Use `terraform state rm` to remove the resource from the original project's state file:
+      ```shell
+      terraform state rm <resource_address>
+      ```
+      At this point, the resource becomes **unmanaged** temporarily.
+  - **Import into the New State**
+    - In the new project or .tf file, import the resource into the new state.
+    ```shell
+    terraform import <resource_address> <actual_resource_id>
+    ```
+  - **Clean Up the Original Configuration**:
+    - Remove references to the split resource in the original .tf file (e.g., large.tf).
+    - Update any associated resources or outputs that referenced the split resource to point to the new configuration (
+      if applicable).
+  - **Verify Dependencies**:
+    - Ensure that any child or dependent resources have been correctly moved to the new configuration or updated to
+      reference the new location.Ω
+  - **Run Terraform Plan and Apply**:
+    - In both the original and new projects, run `terraform plan` and `terraform apply` to ensure everything is properly
+      synchronized and no unintended changes are made.
+- **Steps for Combining**:
+  - Add all resource configuration into a single .tf file.
+  - Use `terraform import` to import resources from different state files into the combined state.
+  - Apply changes to consolidate management.
+
 ### Case8: Ignoring Changes to Specific Attributes
 
+- **Scenario**:
+  - Some attributes of a resource are managed externally (e.g., through an auto-scaling tool) and should be ignored by
+    Terraform.
+  - For example, the `desired_capacity` of an `aws_autoscaling_group` is updated outside of Terraform.
+
+- **Steps**:
+  - Use `lifecycle {ignore_changes = ["<attribute_name>"]}` in the resource configuration block to exclude the attribute
+    from Terraform's management.
+  - Import the resource using `terraform import` to sync the state file.
+  - Ensure the .tf configuration includes `ignore_changes` for the desired attributes before applying changes.
+
 ### Case9: Handling Sensitive Data with terraform import 
+
+- **Scenario**:
+  - Sensitive data (e.g., access key, secrets) is part of resource that needs to be imported, but you don't want to
+    expose it in the .tfstate file.
+- **Steps**:
+  - Write the resource block in the .tf file without sensitive attributes.
+  - Import the resource using `terraform import`
+  - Add sensitive attributes as environment variables or via secret management tools(e.g., AWS Secrets Manager.)
+  - Avoid hardcoding sensitive values in Terraform configurations or state files.
+  - Apply the configuration to ensure sensitive data is properly managed without being stored in plaintext.
+
+--- 
+
+## Question: `terraform import` Move resource From Project/Module A to Project/Module B :
+
+Suppose I import resource X from Terraform Project/Module A to Project/Module B and update Module B's .tf file to
+include the resources:
+
+* What happens to Module A's state file after the import ?
+* Does Module A's .tf file need to be manually updated after apply Project/Module B? 
+
+
