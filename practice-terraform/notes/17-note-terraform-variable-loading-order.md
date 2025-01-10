@@ -88,3 +88,13 @@ creation and constrains are declared in `.tfvars` files!). The `variable.tf` fil
 the `variable block` contains the variables' constrains are essential and apply regardless of priority. The loading
 order impacts the assignment of values to these variables after initialization, while the constrain rules ensure valid
 configurations. 
+
+
+--- 
+
+## `TF_VAR`'s Precedence
+
+- `-var` && `-var-file` > `TF_VAR_ec2_instance_type=xx` > all `.tfvars` and `*.auto.tfvars` and `.tf` variable block
+default values
+
+
