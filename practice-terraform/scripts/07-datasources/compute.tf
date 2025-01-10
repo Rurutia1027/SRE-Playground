@@ -1,17 +1,17 @@
 # data source 1
 data "aws_ami" "ubuntu" {
   most_recent = true
-  owners = ["099720109477"] # Owner is Canonical
+  owners      = ["099720109477"] # Owner is Canonical
 
   # filter rule 1: filter by pattern match AMI name
   filter {
-    name = "name"
+    name   = "name"
     values = ["ubuntu/images/hvm-ssd/ubuntu-*-22.04-amd64-server-*"]
   }
 
   # filter rule 2: filter by AMI's virtualization type
   filter {
-    name = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
 }
@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "static_website" {
     sid = "PublicReadGetObject"
 
     principals {
-      type = "*"
+      type        = "*"
       identifiers = ["*"]
     }
 
@@ -91,16 +91,16 @@ output "aws_region" {
 
 resource "aws_instance" "web" {
   # AMI ID NGINX  = ami-0dfee6e7eb44d480b
-  ami = data.aws_ami.ubuntu.id
+  ami                         = data.aws_ami.ubuntu.id
   associate_public_ip_address = true
-  instance_type = "t2.micro"
+  instance_type               = "t2.micro"
 
   # allocate a piece of disk to active EC2 instance with disk space volume = 10 GB
   # and configure once the active EC2 is deleted or terminated via Terraform command
   # this piece of disk resource will be terminated or destroyed too
   root_block_device {
     delete_on_termination = true
-    volume_size = 10
-    volume_type = "gp3" # ssd type
+    volume_size           = 10
+    volume_type           = "gp3" # ssd type
   }
 }
