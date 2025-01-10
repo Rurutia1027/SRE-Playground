@@ -22,4 +22,6 @@ resource "aws_instance" "compute" {
     volume_size           = var.e2_volume_config.size
     volume_type           = var.e2_volume_config.type
   }
+
+  tags = merge(local.common_tags, var.additional_tags)
 }

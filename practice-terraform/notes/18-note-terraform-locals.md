@@ -89,3 +89,49 @@
 - Scope: Limited to the defining module
 - Mutability: Immutable once defined 
 - Evaluation: During plan phase 
+
+--- 
+
+## Questions
+
+### Where are `locals` stored ?
+
+- `locals` are not persisted in the backend state file or local files.
+- They are **computed at runtime** during Terraform's execution (e.g., plan or apply) and exist only temporarily in the
+  memory during the execution process.
+
+### Comparison with variables
+
+- Variables (defined in `variables.tf` or `.tfvars` files) are inputs that can affect the state of the infrastructure
+  and may indirectly influence the state file through resource definitions.
+- `locals`, on the other hand, are derived values used purely within the Terraform configuration and **do not appear**
+  in the state file or persist beyond the runtime.
+- Variables themselves are not stored in the state file, however, the values assigned to resources through variables are
+  **written to the state file(as part of the resource's configuration state)**. **Locals** only exists in runtime phase
+  memory.
+
+### How to Print the Value of locals
+
+### Use `output`:
+
+Add an output block to Terraform `.tf` to display the value of a local variable after `terraform apply`.
+
+```hcl
+locals {
+  environment_name = "${var.project_name}-${var.env}"
+}
+
+output "environment_name_output" {
+  value = local.environment_name
+}
+```
+
+### Use Terraform Console
+
+- The `terraform console` command allows us to evaluate and view local variable values directly.
+
+```shell 
+terraform console 
+> local.environment_name 
+"xxx"
+```
