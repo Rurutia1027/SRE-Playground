@@ -10,6 +10,9 @@ ec2_volume_config = {
   type = "gp2"
 }
 
+my_sensitive_value = "secret"
+
 additional_tags = {
   ValuesFrom = "terraform.tfvars"
 }
+

@@ -1,3 +1,3 @@
 additional_tags = {
-  ValuesFrom = "or"
+  ValuesFrom = "override.tfvars"
 }
