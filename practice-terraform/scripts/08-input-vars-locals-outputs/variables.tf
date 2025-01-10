@@ -13,7 +13,7 @@ variable "ec2_instance_type" {
   }
 }
 
-variable "e2_volume_config" {
+variable "ec2_volume_config" {
   type = object({
     size = number
     type = string
