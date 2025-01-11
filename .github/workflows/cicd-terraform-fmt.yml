@@ -48,7 +48,9 @@ jobs:
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add .
             git commit -m "chore: Auto-format Terraform files"
-            git push
+          
+            # Ensure you're pushing to the correct branch
+            git push origin HEAD:$(git rev-parse --abbrev-ref HEAD)
           else
             echo "No formatting changes were required."
           fi
