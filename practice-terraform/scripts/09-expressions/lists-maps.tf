@@ -16,9 +16,11 @@ locals {
            usernmames_for_map = [for username, _ in local.users_map : username]
 }
 
-output
-"users_map" {
-  value = local.users_map
+output              "users_map" {
+
+
+
+  value =                   local.users_map
 }
 
 output "users_map2" {

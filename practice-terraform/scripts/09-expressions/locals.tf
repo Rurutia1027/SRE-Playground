@@ -21,8 +21,8 @@ locals {
     key1 = 10
     key2 = "my_inner_value"
     map = {
-      a1 = "b"
-      c2 = "d"
+      a1     = "b"
+      c2     = "d"
       value3 = "f"
     }
   }

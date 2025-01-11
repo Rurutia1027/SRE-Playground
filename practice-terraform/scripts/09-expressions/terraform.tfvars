@@ -36,14 +36,14 @@ users = [
 
 
 
-        {
-    role     = "auditor"
+  {
+    role = "auditor"
 
-           username = "jane"
+    username = "jane"
   },
   {
     role     = "auditor"
-          username = "lauro"
+    username = "lauro"
 
 
   }
