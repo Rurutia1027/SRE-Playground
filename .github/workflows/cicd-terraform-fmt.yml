@@ -1,0 +1,38 @@
+name: Terraform Format Check
+
+on:
+  push:
+    paths:
+      - 'practice-terraform/scripts/**.tf'
+      - 'practice-terraform/projects/proj-*/**.tf' # Trigger when .tf files in these paths are modified
+  pull_request:
+    paths:
+      - 'practice-terraform/scripts/**.tf'
+      - 'practice-terraform/projects/proj-*/**.tf'
+
+jobs:
+  terraform-fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6  # Specify the Terraform version
+
+      - name: Run Terraform Format
+        run: |
+          # Format .tf files in scripts directories
+          for dir in $(find practice-terraform/scripts -maxdepth 1 -type d -name '0*'); do
+            echo "Running terraform fmt in $dir"
+            terraform fmt -check $dir || echo "Formatting issues found in $dir"
+          done
+          
+          # Format .tf files in projects directories
+          for tf_file in $(find practice-terraform/projects/proj-* -type f -name '*.tf'); do
+            echo "Running terraform fmt for $tf_file"
+            terraform fmt -check $tf_file || echo "Formatting issues found in $tf_file"
+          done
