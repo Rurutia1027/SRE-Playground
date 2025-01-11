@@ -4,11 +4,15 @@ on:
   push:
     paths:
       - 'practice-terraform/scripts/**.tf'
-      - 'practice-terraform/projects/proj-*/**.tf' # Trigger when .tf files in these paths are modified
+      - 'practice-terraform/scripts/**.tfvars' # Include .tfvars files
+      - 'practice-terraform/projects/proj-*/**.tf'
+      - 'practice-terraform/projects/proj-*/**.tfvars' # Include .tfvars files
   pull_request:
     paths:
       - 'practice-terraform/scripts/**.tf'
+      - 'practice-terraform/scripts/**.tfvars'
       - 'practice-terraform/projects/proj-*/**.tf'
+      - 'practice-terraform/projects/proj-*/**.tfvars'
 
 jobs:
   terraform-fmt:
