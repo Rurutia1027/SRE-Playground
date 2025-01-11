@@ -28,11 +28,21 @@ jobs:
           # Check .tf files in scripts directories
           for dir in $(find practice-terraform/scripts -maxdepth 1 -type d -name '0*'); do
             echo "Checking terraform fmt in $dir"
-            terraform fmt -check $dir
+            terraform fmt -check $dir || {
+              echo "::error file=$dir::Terraform format issues detected in $dir. Please run 'terraform fmt' to fix."
+              exit 1
+            }
           done
           
           # Check .tf files in projects directories
           for tf_file in $(find practice-terraform/projects/proj-* -type f -name '*.tf'); do
             echo "Checking terraform fmt for $tf_file"
-            terraform fmt -check $tf_file
+            terraform fmt -check $tf_file || {
+              echo "::error file=$tf_file::Terraform format issues detected in $tf_file. Please run 'terraform fmt' to fix."
+              exit 1
+            }
           done
+
+      - name: Success Message
+        if: success()
+        run: echo "Terraform format check passed! All files are properly formatted."
