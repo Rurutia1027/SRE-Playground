@@ -4,15 +4,11 @@ on:
   push:
     paths:
       - 'practice-terraform/scripts/**.tf'
-      - 'practice-terraform/scripts/**.tfvars' # Include .tfvars files
       - 'practice-terraform/projects/proj-*/**.tf'
-      - 'practice-terraform/projects/proj-*/**.tfvars' # Include .tfvars files
   pull_request:
     paths:
       - 'practice-terraform/scripts/**.tf'
-      - 'practice-terraform/scripts/**.tfvars'
       - 'practice-terraform/projects/proj-*/**.tf'
-      - 'practice-terraform/projects/proj-*/**.tfvars'
 
 jobs:
   terraform-fmt:
@@ -27,30 +23,16 @@ jobs:
         with:
           terraform_version: 1.5.6  # Specify the Terraform version
 
-      - name: Run Terraform Format and Auto-Fix
+      - name: Run Terraform Format Check
         run: |
-          # Format .tf files in scripts directories
+          # Check .tf files in scripts directories
           for dir in $(find practice-terraform/scripts -maxdepth 1 -type d -name '0*'); do
-            echo "Running terraform fmt in $dir"
-            terraform fmt $dir
+            echo "Checking terraform fmt in $dir"
+            terraform fmt -check $dir
           done
           
-          # Format .tf files in projects directories
+          # Check .tf files in projects directories
           for tf_file in $(find practice-terraform/projects/proj-* -type f -name '*.tf'); do
-            echo "Running terraform fmt for $tf_file"
-            terraform fmt $tf_file
+            echo "Checking terraform fmt for $tf_file"
+            terraform fmt -check $tf_file
           done
-          
-           # Check if there are any changes
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Changes detected after terraform fmt. Committing changes."
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add .
-            git commit -m "chore: Auto-format Terraform files"
-          
-            # Use GITHUB_TOKEN for authentication when pushing to the repository
-            git push https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/Rurutia1027/SRE-Playground.git HEAD:${{ github.ref }}
-          else
-            echo "No formatting changes were required."
-          fi
