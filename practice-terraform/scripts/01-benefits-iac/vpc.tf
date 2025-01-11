@@ -7,7 +7,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 5.0"
     }
   }
@@ -30,12 +30,12 @@ resource "aws_vpc" "tf-demo-vpc" {
 # then, we create two instances of subnets public subnet and private subnet
 resource "aws_subnet" "tf-demo-public-subnet" {
   // this will bind current created public subnet instance to previous created aws_vpc
-  vpc_id = aws_vpc.tf-demo-vpc.id
+  vpc_id     = aws_vpc.tf-demo-vpc.id
   cidr_block = "10.0.0.0/24"
 }
 resource "aws_subnet" "tf-demo-private-subnet" {
   // this will bind current created private subnet instance to previous created aws_vpc
-  vpc_id = aws_vpc.tf-demo-vpc.id
+  vpc_id     = aws_vpc.tf-demo-vpc.id
   cidr_block = "10.0.1.0/24"
 }
 
@@ -57,6 +57,6 @@ resource "aws_route_table" "tf-public-rtb" {
 }
 
 resource "aws_route_table_association" "tf-public-subnet" {
-  subnet_id = aws_subnet.tf-demo-public-subnet.id
+  subnet_id      = aws_subnet.tf-demo-public-subnet.id
   route_table_id = aws_route_table.tf-public-rtb.id
 }

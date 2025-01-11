@@ -3,7 +3,7 @@ resource "aws_instance" "web" {
   # ubuntu ami: ami                         = "ami-0da9e85793f872825"
 
   # nginx ami free tier AMI = "ami-0dfee6e7eb44d480b"
-  ami = "ami-0dfee6e7eb44d480b"
+  ami                         = "ami-0dfee6e7eb44d480b"
   associate_public_ip_address = true
   instance_type               = "t2.micro"
 

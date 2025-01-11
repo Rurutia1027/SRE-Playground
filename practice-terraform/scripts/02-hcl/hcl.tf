@@ -65,7 +65,7 @@ output "bucket_id" {
 # like aws_s3_bucket.my_bucket.id it need to so complex and embedded structure expression and easy to error spelling
 locals {
   local_example = "This is a local variable"
-  key = "test"
+  key           = "test"
 }
 
 # module is a piece of re-usable code that we then import or into our project
