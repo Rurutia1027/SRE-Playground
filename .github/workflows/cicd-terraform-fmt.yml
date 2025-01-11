@@ -27,16 +27,28 @@ jobs:
         with:
           terraform_version: 1.5.6  # Specify the Terraform version
 
-      - name: Run Terraform Format
+      - name: Run Terraform Format and Auto-Fix
         run: |
           # Format .tf files in scripts directories
           for dir in $(find practice-terraform/scripts -maxdepth 1 -type d -name '0*'); do
             echo "Running terraform fmt in $dir"
-            terraform fmt -check $dir || echo "Formatting issues found in $dir"
+            terraform fmt $dir
           done
           
           # Format .tf files in projects directories
           for tf_file in $(find practice-terraform/projects/proj-* -type f -name '*.tf'); do
             echo "Running terraform fmt for $tf_file"
-            terraform fmt -check $tf_file || echo "Formatting issues found in $tf_file"
+            terraform fmt $tf_file
           done
+          
+          # Check if there are any changes
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Changes detected after terraform fmt. Committing changes."
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "chore: Auto-format Terraform files"
+            git push
+          else
+            echo "No formatting changes were required."
+          fi
