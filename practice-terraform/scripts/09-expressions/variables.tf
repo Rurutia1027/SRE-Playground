@@ -13,13 +13,13 @@ variable "objects_list" {
   }))
 }
 
-# variable "users" {
-#   type = list(object({
-#     username = string
-#     role     = string
-#   }))
-# }
-#
-# variable "user_to_output" {
-#   type = string
-# }
+variable "users" {
+  type = list(object({
+    username = string
+    role     = string
+  }))
+}
+
+variable "user_to_output" {
+  type = string
+}
