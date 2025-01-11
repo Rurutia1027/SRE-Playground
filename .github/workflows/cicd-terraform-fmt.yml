@@ -41,7 +41,7 @@ jobs:
             terraform fmt $tf_file
           done
           
-          # Check if there are any changes
+           # Check if there are any changes
           if [ -n "$(git status --porcelain)" ]; then
             echo "Changes detected after terraform fmt. Committing changes."
             git config user.name "github-actions[bot]"
@@ -49,8 +49,8 @@ jobs:
             git add .
             git commit -m "chore: Auto-format Terraform files"
           
-            # Ensure you're pushing to the correct branch
-            git push origin HEAD:$(git rev-parse --abbrev-ref HEAD)
+            # Use GITHUB_TOKEN for authentication when pushing to the repository
+            git push https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/Rurutia1027/SRE-Playground.git HEAD:${{ github.ref }}
           else
             echo "No formatting changes were required."
           fi
