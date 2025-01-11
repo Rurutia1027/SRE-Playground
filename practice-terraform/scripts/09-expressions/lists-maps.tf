@@ -17,6 +17,9 @@ locals {
 }
 
 output "users_map" {
+
+
+
   value = local.users_map
 }
 

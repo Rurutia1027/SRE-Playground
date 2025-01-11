@@ -5,7 +5,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 5.0"
     }
   }
@@ -26,8 +26,8 @@ resource "aws_vpc" "fullstack-app-vpc" {
 
 # Subnet
 resource "aws_subnet" "fullstack-app-public-subnet" {
-  vpc_id     = aws_vpc.fullstack-app-vpc.id
-  cidr_block = "10.0.0.0/24"
+  vpc_id                  = aws_vpc.fullstack-app-vpc.id
+  cidr_block              = "10.0.0.0/24"
   map_public_ip_on_launch = true
   tags = {
     "Name" = "Fullstack App Public Subnet"
@@ -53,7 +53,7 @@ resource "aws_route_table" "fullstack-public-route-table" {
 
 # Route Table Association
 resource "aws_route_table_association" "fullstack-app-public-subnet-association" {
-  subnet_id = aws_subnet.fullstack-app-public-subnet.id
+  subnet_id      = aws_subnet.fullstack-app-public-subnet.id
   route_table_id = aws_route_table.fullstack-public-route-table.id
 }
 
@@ -63,23 +63,23 @@ resource "aws_security_group" "fullstack-ec2-sg" {
   description = "Allow HTTP and SSH"
 
   ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -91,13 +91,13 @@ resource "aws_security_group" "fullstack-ec2-sg" {
 # Launch Template
 resource "aws_launch_template" "springboot-react-fullstack-lt" {
   name_prefix   = "fullstack-"
-  image_id = "ami-0046702f05be7acc8"
+  image_id      = "ami-0046702f05be7acc8"
   instance_type = "t2.micro"
 
   network_interfaces {
-    security_groups = [aws_security_group.fullstack-ec2-sg.id]
+    security_groups             = [aws_security_group.fullstack-ec2-sg.id]
     associate_public_ip_address = true
-    subnet_id = aws_subnet.fullstack-app-public-subnet.id
+    subnet_id                   = aws_subnet.fullstack-app-public-subnet.id
   }
 
   key_name = "fullstack-key-pair"
@@ -108,7 +108,7 @@ resource "aws_launch_template" "springboot-react-fullstack-lt" {
 
 # Elastic Beanstalk Application
 resource "aws_elastic_beanstalk_application" "springboot-react-fullstack" {
-  name="SpringBoot-React-Fullstack"
+  name        = "SpringBoot-React-Fullstack"
   description = "Elastic Beanstalk Application for SpringBoot React Fullstack Microservice"
 }
 
@@ -120,8 +120,8 @@ resource "aws_elastic_beanstalk_environment" "eb-env" {
     aws_security_group.fullstack-ec2-sg,
     aws_internet_gateway.fullstack-app-igw
   ]
-  name = "fullstack-eb-environment"
-  application = aws_elastic_beanstalk_application.springboot-react-fullstack.name
+  name                = "fullstack-eb-environment"
+  application         = aws_elastic_beanstalk_application.springboot-react-fullstack.name
   solution_stack_name = "64bit Amazon Linux 2 v4.0.5 running Docker"
 
   # VPC Configuration

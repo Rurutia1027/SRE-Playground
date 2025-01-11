@@ -24,6 +24,6 @@ resource "aws_s3_bucket" "ap_northeast_1" {
 
 # apply aws s3 bucket on us-east-1 which is alias as us-east
 resource "aws_s3_bucket" "us_east_1" {
-  bucket = "my-aws-s3-bucket-us-east"
+  bucket   = "my-aws-s3-bucket-us-east"
   provider = aws.us-east
 }
