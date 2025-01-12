@@ -69,3 +69,8 @@ output "example" {
   value = jsoncode(local.my_object)
 }
 ```
+
+--- 
+## Reference
+
+- [Terraform Built-in Functions](https://developer.hashicorp.com/terraform/language/functions)
