@@ -1,5 +1,5 @@
 locals {
-  project = "11-multiple-resources-exercise31"
+  project = "11-multiple-resources-exercise34"
 }
 
 resource "aws_vpc" "main" {
@@ -12,12 +12,13 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "main" {
-  count      = var.subnet_count
+  for_each   = var.subnet_config
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.${count.index}.0/24"
+  cidr_block = each.value.cidr_block
 
   tags = {
     Project = local.project
-    Name    = "${local.project}-${count.index}"
+    Name    = "${local.project}-${each.key}"
   }
 }
+

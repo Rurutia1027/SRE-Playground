@@ -1,5 +1,5 @@
 locals {
-  project = "11-multiple-resources-exercise32"
+  project = "11-multiple-resources-exercise33"
 }
 
 resource "aws_vpc" "main" {
