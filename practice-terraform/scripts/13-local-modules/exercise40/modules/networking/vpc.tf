@@ -1,3 +1,8 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+
 resource "aws_vpc" "this" {
   cidr_block = var.vpc_config.cidr_block
 }
@@ -20,7 +25,7 @@ resource "aws_subnet" "this" {
 
       # to address this, we use a lifecycle precondition along with a data source to fetch and validate the az values at runtime.
       # this ensures that valid AZ values are used during resource creation.
-      conditon = contains(data.aws_availability_zones.available.names, each.value.az)
+      condition = contains(data.aws_availability_zones.available.names, each.value.az)
       error_message = <<-EOT
       The AZ "${each.value.az}" provided for the subnet "${each.key}" is invalid.
 
