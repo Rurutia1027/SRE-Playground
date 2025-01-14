@@ -9,10 +9,14 @@
 
 module "vpc" {
   source = "./modules/networking"
+  # module.vpc's inner defined vpc_config map's value will be passed to module's
+  # inner map variable
+  # and those map inner variables will be allocated to module inner resource's initialization params
   vpc_config = {
     cidr_block = "10.0.0.0/16"
     name       = "13-local-modules-exe38"
   }
+  vpc_cidr = "10.0.0.0/16"
 }
 
 output "output_vpc_cidr_block" {
