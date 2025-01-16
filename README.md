@@ -18,32 +18,34 @@ This repository is dedicated to learning and practicing SRE (Site Reliability En
 
 In this section, you will find links to various certifications, guides, and materials to help you prepare for and pass the exams.
 
-- **Datadog Certifications**  
-  - [Datadog Certified Monitoring & Security Engineer](https://www.datadoghq.com/certification/)
-  - [Datadog Certified Professional - Infrastructure](https://www.datadoghq.com/certification/)
-  
-- **AWS Certifications**  
-  - [AWS Certified Solutions Architect - Associate](https://aws.amazon.com/certification/certified-solutions-architect-associate/)
-  - [AWS Certified SysOps Administrator - Associate](https://aws.amazon.com/certification/certified-sysops-administrator-associate/)
-  - [AWS Certified DevOps Engineer - Professional](https://aws.amazon.com/certification/certified-devops-engineer-professional/)
-
-- **Terraform Certifications**  
-  - [HashiCorp Certified: Terraform Associate](https://www.hashicorp.com/certification/terraform-associate)
-
-- **Azure Certifications**  
-  - [Microsoft Certified: Azure Fundamentals](https://learn.microsoft.com/en-us/certifications/azure-fundamentals/)
-  - [Microsoft Certified: Azure Solutions Architect Expert](https://learn.microsoft.com/en-us/certifications/azure-solutions-architect/)
-  
-- **Kubernetes Certifications**  
-  - [Certified Kubernetes Administrator (CKA)](https://www.cncf.io/certification/cka/)
-  - [Certified Kubernetes Application Developer (CKAD)](https://www.cncf.io/certification/ckad/)
-
-- **Google Cloud Certifications**  
-  - [Google Cloud Professional Cloud Architect](https://cloud.google.com/certification/cloud-architect)
-  - [Google Cloud Professional Cloud DevOps Engineer](https://cloud.google.com/certification/cloud-devops-engineer)
-
-- **Databricks Certifications**  
-  - [Databricks Certified Associate Developer for Apache Spark 3](https://academy.databricks.com/)
+| **Certification Name**                                      | **Short Name** | **Progress** | **Difficulty Bandage** |
+|-------------------------------------------------------------|----------------|--------------|------------------------|
+| **Terraform Certifications**                                |                |              |                        |
+| HashiCorp Certified: Terraform Associate                    | TFA            | ✅ Pass       | 🟢 Beginner            |
+| **AWS Certifications**                                      |                |              |                        |
+| AWS Certified Cloud Practitioner                            | CLF-C02        | In Progress  | 🟢 Beginner            |
+| AWS Certified Solutions Architect – Associate               | SAA-C03        | Pending      | 🟠 Intermediate        |
+| AWS Certified Developer – Associate                         | DVA-C02        | Pending      | 🟠 Intermediate        |
+| AWS Certified SysOps Administrator – Associate              | SOA-C02        | Pending      | 🟠 Intermediate        |
+| AWS Certified Solutions Architect – Professional            | SAP-C02        | Pending      | 🔴 Advanced            |
+| AWS Certified DevOps Engineer – Professional                | DOP-C02        | Pending      | 🔴 Advanced            |
+| AWS Certified Advanced Networking – Specialty               | ANS-C01        | Pending      | 🔴 Advanced            |
+| AWS Certified Security – Specialty                          | SCS-C01        | Pending      | 🔴 Advanced            |
+| AWS Certified Machine Learning – Specialty                  | MLS-C01        | Pending      | 🔴 Advanced            |
+| AWS Certified Data Analytics – Specialty                    | DAS-C01        | Pending      | 🔴 Advanced            |
+| AWS Certified Database – Specialty                          | DBS-C01        | Pending      | 🔴 Advanced            |
+| **Kubernetes Certifications**                               |                |              |                        |
+| Certified Kubernetes Administrator (CKA)                    | CKA            | Pending      | 🟠 Intermediate        |
+| Certified Kubernetes Application Developer (CKAD)           | CKAD           | Pending      | 🟠 Intermediate        |
+| Certified Kubernetes Security Specialist (CKS)              | CKS            | Pending      | 🔴 Advanced            |
+| Kubernetes and Cloud Native Associate (KCNA)                | KCNA           | Pending      | 🟢 Beginner            |
+| **Prometheus Certifications**                               |                |              |                        |
+| Prometheus Certified Associate (PCA)                        | PCA            | Pending      | 🟠 Intermediate        |
+| **Datadog Certifications**                                  |                |              |                        |
+| Datadog Certified Monitoring & Security Engineer            | DD-MSE         | Pending      | 🔴 Advanced            |
+| Datadog Certified Professional - Infrastructure             | DD-Infra       | Pending      | 🔴 Advanced            |
+| **Databricks Certifications**                               |                |              |                        |
+| Databricks Certified Associate Developer for Apache Spark 3 | DB-Spark       | Pending      | 🟠 Intermediate        |
 
 ---
 
