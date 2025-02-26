@@ -30,19 +30,29 @@ jobs:
 
       - name: Run CKA Certification Practice Scripts
         run: |
-          chmod +x kubernetes-practice-scripts/cka-practice.sh
-          kubernetes-practice-scripts/cka-practice.sh
+          #chmod +x kubernetes-practice-scripts/cka-practice.sh
+          #kubernetes-practice-scripts/cka-practice.sh
+          # this should iterate all scripts under each folder, 
+          # first, exeucte the operation script 
+          # then, execute the test / status validate script 
+          # last, exeucte the script of recover the cluster's current mofied status into the preivouls status
+          # for next script exeuction.  
+          echo "we have not implement the scripts yet, just print some logs and skip it"          
 
       - name: Validate Cluster Changes
         run: |
           echo "🔍 Verifying if cluster state changed after execution..."
+          kubectl cluster-info || { echo "Kubernetes cluster is not running!"; exit 1; }
+          kubectl get nodes || { echo "Failed to get nodes"; exit 1; }
+          kubectl get pods -A || { echo "Failed to get running pods"; exit 1; }
           kubectl get all -A
           kubectl describe nodes
           helm list -A
 
-      - name: Upload Test Logs (Optional)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cka-test-logs
-          path: logs/
+      # skip uploading test logs step 
+      # - name: Upload Test Logs (Optional)
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cka-test-logs
+      #     path: logs/
