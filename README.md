@@ -35,7 +35,7 @@ In this section, you will find links to various certifications, guides, and mate
 | AWS Certified Data Analytics – Specialty                    | DAS-C01        | Pending      | 🔴 Advanced            |
 | AWS Certified Database – Specialty                          | DBS-C01        | Pending      | 🔴 Advanced            |
 | **Kubernetes Certifications**                               |                |              |                        |
-| Certified Kubernetes Administrator (CKA)                    | CKA            | Pending      | 🟠 Intermediate        |
+| Certified Kubernetes Administrator (CKA)                    | CKA            | In Progress      | 🟠 Intermediate        |
 | Certified Kubernetes Application Developer (CKAD)           | CKAD           | Pending      | 🟠 Intermediate        |
 | Certified Kubernetes Security Specialist (CKS)              | CKS            | Pending      | 🔴 Advanced            |
 | Kubernetes and Cloud Native Associate (KCNA)                | KCNA           | Pending      | 🟢 Beginner            |
