@@ -1,0 +1,48 @@
+name: CKA Certification Participation Scripts
+
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  run-cka-practice-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Minikube (Kubernetes Environment)
+        uses: medyagh/setup-minikube@latest
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
+
+      - name: Verify Kubernetes Cluster
+        run: kubectl get nodes
+
+      - name: Run CKA Certification Practice Scripts
+        run: |
+          chmod +x kubernetes-practice-scripts/cka-practice.sh
+          kubernetes-practice-scripts/cka-practice.sh
+
+      - name: Validate Cluster Changes
+        run: |
+          echo "🔍 Verifying if cluster state changed after execution..."
+          kubectl get all -A
+          kubectl describe nodes
+          helm list -A
+
+      - name: Upload Test Logs (Optional)
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cka-test-logs
+          path: logs/
