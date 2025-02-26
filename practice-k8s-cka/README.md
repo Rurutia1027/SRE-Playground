@@ -56,6 +56,8 @@ This repository contains scripts and configurations to help you prepare for the 
    kubectl get pods -A
    ```
 
+
 ## 📖 References
+- **Kuberntes Offical Online Doc** [Kubernetes Documentation](https://kubernetes.io/docs/home/)
 - **Video on Udemy:** [Certified Kubernetes Administrator](https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests)
 - **Practice Platform:** [KodeKloud Labs](https://learn.kodekloud.com/user/courses/udemy-labs-certified-kubernetes-administrator-with-practice-tests)
