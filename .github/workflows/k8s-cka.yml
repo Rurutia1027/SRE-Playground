@@ -1,0 +1,58 @@
+name: CKA Certification Participation Scripts
+
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  run-cka-practice-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Minikube (Kubernetes Environment)
+        uses: medyagh/setup-minikube@latest
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
+
+      - name: Verify Kubernetes Cluster
+        run: kubectl get nodes
+
+      - name: Run CKA Certification Practice Scripts
+        run: |
+          #chmod +x kubernetes-practice-scripts/cka-practice.sh
+          #kubernetes-practice-scripts/cka-practice.sh
+          # this should iterate all scripts under each folder, 
+          # first, exeucte the operation script 
+          # then, execute the test / status validate script 
+          # last, exeucte the script of recover the cluster's current mofied status into the preivouls status
+          # for next script exeuction.  
+          echo "we have not implement the scripts yet, just print some logs and skip it"          
+
+      - name: Validate Cluster Changes
+        run: |
+          echo "🔍 Verifying if cluster state changed after execution..."
+          kubectl cluster-info || { echo "Kubernetes cluster is not running!"; exit 1; }
+          kubectl get nodes || { echo "Failed to get nodes"; exit 1; }
+          kubectl get pods -A || { echo "Failed to get running pods"; exit 1; }
+          kubectl get all -A
+          kubectl describe nodes
+          helm list -A
+
+      # skip uploading test logs step 
+      # - name: Upload Test Logs (Optional)
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cka-test-logs
+      #     path: logs/
