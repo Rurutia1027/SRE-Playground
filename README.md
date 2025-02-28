@@ -2,16 +2,7 @@
 
 This repository is dedicated to learning and practicing SRE (Site Reliability Engineering) concepts, certifications, and related tools. It includes hands-on tutorials, certification guides, and various resources for SRE, DevOps, and Cloud Infrastructure technologies.
 
-## Table of Contents
-- [SRE-Playground](#sre-playground)
-  - [Table of Contents](#table-of-contents)
-  - [Certifications](#certifications)
-  - [Practice or On Hands](#practice-or-on-hands)
-  - [Tools and Technologies](#tools-and-technologies)
-  - [TODO List](#todo-list)
-  - [Contributions](#contributions)
-  - [License](#license)
-
+-  **[Credly Badge Link](https://www.credly.com/users/hui-xie.ce45877a)**
 ---
 
 ## Certifications
