@@ -18,34 +18,32 @@ This repository is dedicated to learning and practicing SRE (Site Reliability En
 
 In this section, you will find links to various certifications, guides, and materials to help you prepare for and pass the exams.
 
-| **Certification Name**                                      | **Short Name** | **Progress** | **Difficulty Bandage** |
-|-------------------------------------------------------------|----------------|--------------|------------------------|
-| **Terraform Certifications**                                |                |              |                        |
-| HashiCorp Certified: Terraform Associate                    | TFA            | ✅ Pass       | 🟢 Beginner            |
-| **AWS Certifications**                                      |                |              |                        |
-| AWS Certified Cloud Practitioner                            | CLF-C02        | In Progress  | 🟢 Beginner            |
-| AWS Certified Solutions Architect – Associate               | SAA-C03        | Pending      | 🟠 Intermediate        |
-| AWS Certified Developer – Associate                         | DVA-C02        | Pending      | 🟠 Intermediate        |
-| AWS Certified SysOps Administrator – Associate              | SOA-C02        | Pending      | 🟠 Intermediate        |
-| AWS Certified Solutions Architect – Professional            | SAP-C02        | Pending      | 🔴 Advanced            |
-| AWS Certified DevOps Engineer – Professional                | DOP-C02        | Pending      | 🔴 Advanced            |
-| AWS Certified Advanced Networking – Specialty               | ANS-C01        | Pending      | 🔴 Advanced            |
-| AWS Certified Security – Specialty                          | SCS-C01        | Pending      | 🔴 Advanced            |
-| AWS Certified Machine Learning – Specialty                  | MLS-C01        | Pending      | 🔴 Advanced            |
-| AWS Certified Data Analytics – Specialty                    | DAS-C01        | Pending      | 🔴 Advanced            |
-| AWS Certified Database – Specialty                          | DBS-C01        | Pending      | 🔴 Advanced            |
-| **Kubernetes Certifications**                               |                |              |                        |
-| Certified Kubernetes Administrator (CKA)                    | CKA            | In Progress      | 🟠 Intermediate        |
-| Certified Kubernetes Application Developer (CKAD)           | CKAD           | Pending      | 🟠 Intermediate        |
-| Certified Kubernetes Security Specialist (CKS)              | CKS            | Pending      | 🔴 Advanced            |
-| Kubernetes and Cloud Native Associate (KCNA)                | KCNA           | Pending      | 🟢 Beginner            |
-| **Prometheus Certifications**                               |                |              |                        |
-| Prometheus Certified Associate (PCA)                        | PCA            | Pending      | 🟠 Intermediate        |
-| **Datadog Certifications**                                  |                |              |                        |
-| Datadog Certified Monitoring & Security Engineer            | DD-MSE         | Pending      | 🔴 Advanced            |
-| Datadog Certified Professional - Infrastructure             | DD-Infra       | Pending      | 🔴 Advanced            |
-| **Databricks Certifications**                               |                |              |                        |
-| Databricks Certified Associate Developer for Apache Spark 3 | DB-Spark       | Pending      | 🟠 Intermediate        |
+# Certification Plan
+
+| **Certification Name**                                      | **Short Name**  | **Status**       | **Target Date** | **Difficulty**  | **Exam Fee ($)** |
+|-------------------------------------------------------------|-----------------|------------------|----------------|-----------------|------------------|
+| **Terraform Certifications**                                |                 |                  |                |                 |                  |
+| HashiCorp Certified: Terraform Associate                    | TFA             | ✅ Passed        | -              | 🟢 Beginner     | $70              |
+| **AWS Certifications**                                      |                 |                  |                |                 |                  |
+| AWS Certified Cloud Practitioner                            | CLF-C02         | ✅ Passed        | -              | 🟢 Beginner     | $100             |
+| AWS Certified Developer – Associate                         | DVA-C02         | Pending          | March          | 🟠 Intermediate | $150             |
+| AWS Certified Data Engineer – Associate                     | DEA-C01         | Pending          | March          | 🟠 Intermediate | $150             |
+| AWS Certified DevOps Engineer – Professional                | DOP-C02         | Pending          | July-Sept      | 🔴 Advanced     | $300             |
+| **Kubernetes Certifications**                               |                 |                  |                |                 |                  |
+| Certified Kubernetes Administrator (CKA)                    | CKA             | 🟡 In Progress   | April          | 🟠 Intermediate | $395             |
+| **Prometheus Certifications**                               |                 |                  |                |                 |                  |
+| Prometheus Certified Associate                              | PCA             | Pending          | April          | 🟠 Intermediate | $250             |
+| **Datadog Certifications**                                  |                 |                  |                |                 |                  |
+| Datadog Fundamentals                                        | DD-Fundamentals | Pending          | May            | 🟢 Beginner     | $100             |
+| APM & Distributed Tracing Fundamentals                      | DD-APM          | Pending          | May            | 🟢 Beginner     | $100             |
+| **Azure Certifications**                                    |                 |                  |                |                 |                  |
+| Azure Developer Associate                                   | AZ-204          | Pending          | June           | 🟠 Intermediate | $165             |
+| Azure Data Engineer Associate                              | DP-203          | Pending          | June           | 🟠 Intermediate | $165             |
+| **Databricks Certifications**                               |                 |                  |                |                 |                  |
+| Databricks Certified Associate Developer for Apache Spark   | DB-Spark        | Pending          | 7-9 Months     | 🟠 Intermediate | $200             |
+| Databricks Certified Hadoop Migration Architect            | DB-Hadoop       | Pending          | 7-9 Months     | 🔴 Advanced     | $200             |
+| Databricks AWS Platform Architect                          | DB-AWS          | Pending          | 7-9 Months     | 🔴 Advanced     | $200             |
+| Databricks Azure Platform Architect                        | DB-Azure        | Pending          | 7-9 Months     | 🔴 Advanced     | $200             |
 
 ---
 
