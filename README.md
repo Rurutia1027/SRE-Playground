@@ -10,7 +10,6 @@ This repository is dedicated to learning and practicing SRE (Site Reliability En
 In this section, you will find links to various certifications, guides, and materials to help you prepare for and pass the exams.
 
 # Certification Plan
-# Certification Plan
 
 | **Certification Name**                                      | **Short Name**  | **Status**       | **Target Date** | **Difficulty**  | **Exam Fee ($)** |
 |-------------------------------------------------------------|-----------------|------------------|-----------------|-----------------|------------------|
@@ -85,47 +84,10 @@ The repository covers a wide array of tools and technologies used in Site Reliab
 - GCP
 - Datadog
 - Databricks
+- Prometheus 
 
 ---
 
-## TODO List
-
-- [ ] **Datadog Certifications**
-  - [ ] Datadog Certified Monitoring & Security Engineer
-  - [ ] Datadog Certified Professional - Infrastructure
-  
-- [ ] **AWS Certifications**
-  - [ ] AWS Certified Solutions Architect - Associate
-  - [ ] AWS Certified SysOps Administrator - Associate
-  - [ ] AWS Certified DevOps Engineer - Professional
-
-- [ ] **Terraform Certifications**
-  - [ ] HashiCorp Certified: Terraform Associate
-  
-- [ ] **Azure Certifications**
-  - [ ] Microsoft Certified: Azure Fundamentals
-  - [ ] Microsoft Certified: Azure Solutions Architect Expert
-  
-- [ ] **Kubernetes Certifications**
-  - [ ] Certified Kubernetes Administrator (CKA)
-  - [ ] Certified Kubernetes Application Developer (CKAD)
-  
-- [ ] **Google Cloud Certifications**
-  - [ ] Google Cloud Professional Cloud Architect
-  - [ ] Google Cloud Professional Cloud DevOps Engineer
-  
-- [ ] **Databricks Certifications**
-  - [ ] Databricks Certified Associate Developer for Apache Spark 3
-
-- [ ] **Practice or On Hands**
-  - [ ] Complete Kubernetes hands-on labs
-  - [ ] Deploy infrastructure with Terraform
-  - [ ] Set up AWS services and automate infrastructure with CloudFormation
-  - [ ] Explore Azure and GCP hands-on labs
-  - [ ] Set up and configure Datadog for monitoring and alerting
-  - [ ] Build data pipelines in Databricks
-
---- 
 ## Contributions 
 Feel free to submit pull requests with additional examples, tools, or certification resources. Collaboration is welcome!
 
