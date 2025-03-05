@@ -13,3 +13,9 @@
 * Update ETCD 
 * Scheduler 
 * Kubelet 
+
+## View api-server options 
+
+```bash 
+ps -aux | grep kube-apiserver 
+```
