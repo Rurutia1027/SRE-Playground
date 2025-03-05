@@ -153,3 +153,127 @@ controlplane ~ ➜  kubectl describe pod webapp | grep image
 
 controlplane ~ ➜  
 ```
+
+
+## What is the state of the container `agentx` in the pod `webapp`?
+
+- **Ans**: Error & Waitting 
+
+- Wait for finish the `ContainerCreating` state.
+
+```bash 
+controlplane ~ ➜  kubectl get pods --namespace=default 
+NAME            READY   STATUS             RESTARTS       AGE
+newpods-d6trf   1/1     Running            1 (5m4s ago)   21m
+newpods-jgj62   1/1     Running            1 (5m4s ago)   21m
+newpods-vsc26   1/1     Running            1 (5m4s ago)   21m
+nginx-pod       1/1     Running            0              20m
+webapp          1/2     ImagePullBackOff   0              5m11s
+
+controlplane ~ ➜  kubectl describe pod webapp | grep agentx
+  agentx:
+    Image:          agentx
+  Normal   Pulling    2m23s (x5 over 5m19s)  kubelet            Pulling image "agentx"
+  Warning  Failed     2m22s (x5 over 5m19s)  kubelet            Failed to pull image "agentx": failed to pull and unpack image "docker.io/library/agentx:latest": failed to resolve reference "docker.io/library/agentx:latest": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+  Normal   BackOff    7s (x23 over 5m18s)    kubelet            Back-off pulling image "agentx"
+```
+
+## Why do you think the container `agentx` in pod `webapp` is in error? 
+
+- Try to figure out from the events section of the Pod. 
+
+- **Answer**: A Docker image with this name doesn't exist on Docker Hub. 
+
+```bash 
+controlplane ~ ➜  kubectl get pods --namespace=default 
+NAME            READY   STATUS             RESTARTS       AGE
+newpods-d6trf   1/1     Running            1 (5m4s ago)   21m
+newpods-jgj62   1/1     Running            1 (5m4s ago)   21m
+newpods-vsc26   1/1     Running            1 (5m4s ago)   21m
+nginx-pod       1/1     Running            0              20m
+webapp          1/2     ImagePullBackOff   0              5m11s
+
+controlplane ~ ➜  kubectl describe pod webapp | grep agentx
+  agentx:
+    Image:          agentx
+  Normal   Pulling    2m23s (x5 over 5m19s)  kubelet            Pulling image "agentx"
+  Warning  Failed     2m22s (x5 over 5m19s)  kubelet            Failed to pull image "agentx": failed to pull and unpack image "docker.io/library/agentx:latest": failed to resolve reference "docker.io/library/agentx:latest": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+  Normal   BackOff    7s (x23 over 5m18s)    kubelet            Back-off pulling image "agentx"
+```
+
+
+
+## What does the **READY** column in the output of the `kubectl get pods` command indicate? 
+
+- **ANS**: READY=<number-of-running-containers>/<total-containers>
+
+
+## Delete the `webapp` Pod.
+- Once deleted, wait for the pod to fully terminate. 
+
+```bash
+controlplane ~ ➜  kubectl get pods --namespace=default | grep webapp 
+webapp          1/2     ImagePullBackOff   0             10m
+
+controlplane ~ ➜  kubectl delete pod webapp --namespace=default
+pod "webapp" deleted
+
+controlplane ~ ➜  
+```
+
+
+## Create a new pod with the name `redis` and the image `redis123`. 
+- Use a pod-definition YAML file. And yes the image name is wrong!
+  
+- yaml file 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: redis
+spec:
+  containers:
+  - name: redis
+    image: redis123
+    ports:
+    - containerPort: 6379
+```
+- shell command 
+```bash 
+controlplane ~ ➜  ls
+sample.yaml
+
+controlplane ~ ➜  cat sample.yaml 
+
+controlplane ~ ➜  vim sample.yaml 
+
+controlplane ~ ➜  ls
+sample.yaml
+
+controlplane ~ ➜  kubectl apply -f ./sample.yaml --namespace=default 
+pod/redis created
+
+# this pod cannobe be created because the given image name 
+# is wrong, but it already means that other declaraiton in the yaml file goes as expected. 
+controlplane ~ ➜  kubectl get pods | grep redis 
+redis           0/1     ErrImagePull   0             8s
+```
+
+
+## Now change the image on this pod to redis
+- Once done, the pod should be in a `running` state. 
+
+
+- shell command 
+```bash 
+controlplane ~ ✖ kubectl describe pod redis | grep image 
+  Normal   Pulling    73s (x4 over 2m29s)  kubelet            Pulling image "redis123"
+  Warning  Failed     72s (x4 over 2m28s)  kubelet            Failed to pull image "redis123": failed to pull and unpack image "docker.io/library/redis123:latest": failed to resolve reference "docker.io/library/redis123:latest": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+  Normal   BackOff    0s (x10 over 2m28s)  kubelet            Back-off pulling image "redis123"
+
+controlplane ~ ➜  kubectl set image pod/redis redis=redis --namespace=default
+pod/redis image updated
+
+controlplane ~ ➜  kubectl get pods --namespace=default | grep redis 
+redis           1/1     Running   0             3m12s
+```
