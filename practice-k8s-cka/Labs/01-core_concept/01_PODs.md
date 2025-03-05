@@ -225,6 +225,31 @@ controlplane ~ ➜
 ## Create a new pod with the name `redis` and the image `redis123`. 
 - Use a pod-definition YAML file. And yes the image name is wrong!
   
+- Use this command to create pod and open the pod's yaml file. 
+```bash 
+kubectl run redis --image=redis123 --dry-run -o yaml 
+```
+
+- Then we got a yaml file of pod redis 
+
+```yaml 
+apiVersion: v1
+kind: Pod 
+metadata:
+  creationTimestamp: null
+  labels: 
+    run: redis 
+  name: redis 
+spec:
+  containers:
+  - image: redis123 
+    name: redis 
+    resources: }
+  dnsPolicy: ClusterFirst 
+  restartPolicy: Always
+status: {}
+```
+
 - yaml file 
 ```yaml
 apiVersion: v1
