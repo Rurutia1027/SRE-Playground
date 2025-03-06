@@ -35,5 +35,58 @@ kubectl create -f nginx-deployment.yaml
 kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml 
 ```
 
+## Imperative Commands
 
+- create nginx pod
 
+```shell
+kubectl run --image=nginx nginx 
+```
+
+- create deployment of nginx
+
+```shell
+kbuectl create deployment --image=nginx nginx 
+```
+
+- expose deployment port
+
+```shell
+kubectl expose deployment nginx --port 80
+```
+
+- edit an already exist pod command via yaml
+
+```shell
+kubectl edit deployment nginx 
+```
+
+- scala deployment's replcia-set number
+
+```shell
+kubectl scale deployment nginx --replicas=5
+```
+
+- update image of an already exist deployment instance
+
+```shell
+kubectl set image deployment nginx nginx=nginx:1.18
+```
+
+- create a nginx yaml file as default && to be modified standard pod yaml file
+
+```shell
+kubectl create -f nginx.yml 
+```
+
+- refresh an already existing pod's parameters and configurations(make sure the pod is already created and exist in current
+  context)
+
+```shell
+kubectl replace -f nginx.yml
+```
+
+- delete an already existing pod instance 
+```shell
+kubectl delete -f nginx.yml 
+```
