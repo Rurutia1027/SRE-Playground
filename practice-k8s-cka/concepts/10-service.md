@@ -23,8 +23,6 @@ a fixed IP and DNS name to enable reliable communication between components in a
 
   ![](./service-types.png)
   ![](service-types-diagram.png)
-
-  
 ---
 
 ## NodePort 
@@ -33,7 +31,7 @@ a fixed IP and DNS name to enable reliable communication between components in a
 
 ### Create a NodePort Service 
 
-![img.png](ports-nodePorts.png)
+![](ports-nodePorts.png)
 
 - service-definition.yml
 ```yaml
@@ -47,6 +45,50 @@ spec:
     - targetPort: 80  # targetPort is referring to Pod's exposed port value 
       port: 80        # port is referring to the port of the services exposing 
       nodePort: 3008  # nodePort is service exposed port value if we do not specify this value, it will locate in the range of [3000, 32767]
-
 ```
+
+## How a Service of NodePort Binds Pods and Service Together 
+- via `selector`
+### Create a Service of NodePort Type 
+- service-definition.yml
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:     # via selector specify the keywords that match with the labelled pods
+    app: myapp  # this should match the selector#app value 
+    type: frontend
+```
+- pod-definition.yml
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp  # this should match the selector#app 
+    type: frontend
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx 
+```
+
+- use command to create the service and view the service staus
+
+```bash 
+kubectl apply -f ./service-definition.yml 
+
+# print services info 
+kubectl get services 
+```
+
 
