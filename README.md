@@ -94,3 +94,9 @@ Feel free to submit pull requests with additional examples, tools, or certificat
 --- 
 ## License 
 This repository is licensed under the MIT License.
+
+
+--- 
+## References && Resources
+**KodeKloud** series of courses and playgrounds are HIGHLY Recommand!!!**
+- [KodeKloud](https://learn.kodekloud.com/)
