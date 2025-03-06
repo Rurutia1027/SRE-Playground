@@ -22,3 +22,31 @@ a fixed IP and DNS name to enable reliable communication between components in a
 - ExternalName - Maps a service to an external domain name.
 
   ![](./service-types.png)
+  ![](service-types-diagram.png)
+
+  
+---
+
+## NodePort 
+- NodePort's valid range is [3000, 32767].
+- ![](service-node-port.png)
+
+### Create a NodePort Service 
+
+![img.png](ports-nodePorts.png)
+
+- service-definition.yml
+```yaml
+apiVersion: v1
+kind: Service
+metadat:
+  name: myapp-service
+spec:
+  type: NodePort # the type of service {ClusterIp, NodePort, LoadBalancer, ExternalName}
+  ports:
+    - targetPort: 80  # targetPort is referring to Pod's exposed port value 
+      port: 80        # port is referring to the port of the services exposing 
+      nodePort: 3008  # nodePort is service exposed port value if we do not specify this value, it will locate in the range of [3000, 32767]
+
+```
+
