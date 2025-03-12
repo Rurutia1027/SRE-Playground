@@ -30,7 +30,7 @@ kubectl describe node kubemaster | grep Taint
 ```yaml 
 # pod-definition.yml 
 
-apiVersion:
+apiVersion: v1
 kind: Pod
 metadata:
   name: myapp-pod
@@ -42,7 +42,7 @@ spec:
     - key: "app"
       operator: "Equal"
       value: "blue"
-      effect: "NoSchedule" 
+      effect: "NoSchedule"
 
 ```
 
