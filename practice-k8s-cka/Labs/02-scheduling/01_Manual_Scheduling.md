@@ -175,7 +175,7 @@ spec:
 ```shell
 controlplane ~ ➜  kubectl apply -f nginx.yaml 
 pod/nginx created
-
+ 
 controlplane ~ ➜  kubectl get pods -o wide 
 NAME    READY   STATUS    RESTARTS   AGE   IP           NODE           NOMINATED NODE   READINESS GATES
 nginx   1/1     Running   0          8s    172.17.0.4   controlplane   <none>           <none>
