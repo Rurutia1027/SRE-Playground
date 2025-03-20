@@ -36,3 +36,9 @@ spec:
         - secretRef:
             name: app-secret
 ```
+
+## Note on Secrets
+
+- Secrets are not Encrypted. Only encoded.
+- Do not check-in Secret objects to SCM along with code. 
+- 
