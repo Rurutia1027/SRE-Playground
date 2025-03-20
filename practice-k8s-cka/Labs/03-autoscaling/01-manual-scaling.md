@@ -68,3 +68,46 @@ NAME                             READY   STATUS    RESTARTS   AGE
 flask-web-app-584dd886c8-82zwb   1/1     Running   0          23s
 flask-web-app-584dd886c8-cfztr   1/1     Running   0          23s
 ```
+
+## Q3: What's he primary purpose of the kubectl scale command?
+
+- ANS: To adjust the number of replicas in a deployment or replicaset.
+
+## Q4: Can the kubectl scale command be used to scale down a statefulset in Kubernetes
+
+- ANS: Yes, both statefulsets can deployments can use kubectl scale command
+
+## Q5: Manual Scale
+
+Manually scale the deployment named flask-web-app to have 3 replicas.
+
+Observation
+Observe the changes with kubectl get deployments and kubectl get pods.
+
+- ANS
+
+```shell
+controlplane ~ ➜  kubectl scale deployment/flask-web-app --replicas=3
+deployment.apps/flask-web-app scaled
+
+controlplane ~ ➜  kbuectl ^C
+
+controlplane ~ ✖ kubectl get pods 
+NAME                             READY   STATUS    RESTARTS   AGE
+flask-web-app-584dd886c8-82zwb   1/1     Running   0          4m56s
+flask-web-app-584dd886c8-cfztr   1/1     Running   0          4m56s
+flask-web-app-584dd886c8-hsbwm   1/1     Running   0          5s
+
+controlplane ~ ➜  kubectl get deployment 
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+flask-web-app   3/3     3            3           5m5s
+```
+
+## Q6:
+
+If you have scale a deployment using `kubectl scale` to higher number of replicas, but the cluster has insufficient
+resources to accommodate all new replicas, what will happen?
+
+- ANS:
+  Some replicas will be created up to the limit of available resources, and the deployment will remain in a pending
+  state for the remaining replicas.
