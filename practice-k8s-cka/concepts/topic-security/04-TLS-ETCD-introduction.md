@@ -107,7 +107,8 @@ ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
 ## Analogy that Helps me figure out ca.crt, client.crt and client.key
 
 - ca.crt = The government that issues passport.
-- client.crt = Your passport, providing who you are.
+- client.crt = Your passport, providing who you are, here we need to know is: passport != public key, passport contains
+  the public key based on the CA.
 - client.key = Your fingerprint, proving the passport belongs to you.
 
 - Without ca.crt, you can't check if a passport is real.
@@ -117,3 +118,9 @@ ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
 - The client uses ca.crt to verify the server.
 - The server uses ca.crt to verify the client.
 - It ensures mutual trust between client and server. 
+
+## Extra Tips
+
+- Passport (admin.crt) != Public Key
+- But the passport contains the public key inside.
+- It is signed by the CA to prove its authenticity. 
