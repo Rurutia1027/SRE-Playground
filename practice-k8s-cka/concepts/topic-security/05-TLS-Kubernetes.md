@@ -1,5 +1,7 @@
 # TLS in Kubernetes
 
+![](TLS-K8S-Certificates.png)
+
 ## Server Certificates for Servers
 
 ![](./s-2-s.png)
