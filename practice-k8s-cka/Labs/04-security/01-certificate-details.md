@@ -197,7 +197,189 @@ Which of the below alternate names is not configured on the Kube API Server Cert
 
 #### Solutions
 ```shell
-openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text
+
+controlplane ~ ➜  openssl x509  -in /etc/kubernetes/pki/apiserver.crt  -text -noout | grep Name -A8
+            X509v3 Subject Alternative Name: 
+                DNS:controlplane, DNS:kubernetes, DNS:kubernetes.default, DNS:kubernetes.default.svc, DNS:kubernetes.default.svc.cluster.local, IP Address:172.20.0.1, IP Address:192.168.117.19
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        48:2f:4f:87:1d:b0:fb:04:ce:08:78:74:4b:d6:2b:15:6e:50:
+        e3:96:19:f8:e4:d7:cc:db:91:91:d4:0b:d6:db:3e:68:c3:04:
+        1a:27:a1:77:87:42:fb:d9:6b:10:36:46:02:93:60:cb:6f:28:
+        6f:fb:04:5e:5a:a2:7e:91:0a:50:16:d0:04:fd:4e:e5:ae:b7:
+        a8:57:3e:f1:6b:2c:2b:a5:cc:94:64:b8:70:6d:33:0c:33:b3:
 ```
 
+#### Final Answer
 
+```shell
+kube-master is not configured in the alternative name 
+```
+
+## Task 9
+
+What is the Common Name (CN) configured on the ETCD Server certificate
+
+#### Solution
+
+```shell
+controlplane ~ ➜  cat /etc/kubernetes/manifests/etcd.yaml  | grep crt 
+    - --cert-file=/etc/kubernetes/pki/etcd/server.crt
+    - --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+    - --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+    - --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+
+controlplane ~ ➜  openssl x509 -in /etc/kubernetes/pki/etcd/server.crt -text -noout | grep CN 
+        Issuer: CN = etcd-ca
+        Subject: CN = controlplane
+```
+
+#### Final Answer
+
+```shell
+controlplane
+```
+
+## Task 10
+
+How long, from the issued date, is the Kube-API Server Certificate valid for ?
+_File: /etc/kubernetes/pki/apiserver.crt_
+
+#### Solution
+
+```shell
+controlplane ~ ➜  openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1432039800914772394 (0x13dfa09c95bf01aa)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN = kubernetes
+        Validity
+            Not Before: Mar 23 00:58:34 2025 GMT
+            Not After : Mar 23 01:03:34 2026 GMT
+```
+
+#### Final Answer
+
+```shell
+1 year 
+```
+
+## Task 11
+
+How long, from the issued date, is the Root CA Certificate valid for?
+_File: /etc/kubernetes/pki/ca.crt_
+
+#### Solutions:
+
+```shell
+
+controlplane ~ ➜  openssl x509 -in /etc/kubernetes/pki/ca.crt -text -noout
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4059416468615011341 (0x3855f1c53f2b1c0d)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN = kubernetes
+        Validity
+            Not Before: Mar 23 00:58:34 2025 GMT
+            Not After : Mar 21 01:03:34 2035 GMT
+```
+
+#### Final Answer
+
+```shell
+10 years
+```
+
+## Task 12
+
+Kubectl suddenly stops responding to your commands. Check it out! Someone recently modified the
+`/etc/kubernetes/manifests/etcd.yaml` file.
+
+_you are asked to investigate and fix the issue. once you fix the issue wait for sometime for kubectl to respond. Check
+the logs of ETCD container._
+
+#### Solutions
+
+- check etcd config file first
+
+```shell
+vim /etc/kubernetes/manifest/etcd.yaml 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubeadm.kubernetes.io/etcd.advertise-client-urls: https://192.168.117.19:2379
+  creationTimestamp: null
+  labels:
+    component: etcd
+    tier: control-plane
+  name: etcd
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - etcd
+    - --advertise-client-urls=https://192.168.117.19:2379
+    - --cert-file=/etc/kubernetes/pki/etcd/server-certificate.crt. # <--- something error here modify it to server.crt instead 
+```
+
+## Task 13
+
+The kube-api server stopped again! Check it out. Inspect the kube-api server logs and identify the root cause and fix
+the issue.
+
+Run `crictl ps -a` command to identify the kube-api server container. Run `crictl logs container-id` command to view the
+logs.
+
+#### Solutions
+
+```shell
+controlplane ~ ✖ crictl ps -a | grep apiserver
+27fa85a859701       c2e17b8d0f4a3       41 seconds ago      Exited              kube-apiserver            2                   5da37e380ff27       kube-apiserver-controlplane            kube-system
+
+controlplane ~ ➜  crictl logs 27fa85a859701
+W0323 01:41:33.298423       1 registry.go:256] calling componentGlobalsRegistry.AddFlags more than once, the registry will be set by the latest flags
+I0323 01:41:33.298806       1 options.go:238] external host was not specified, using 192.168.117.19
+I0323 01:41:33.300402       1 server.go:143] Version: v1.32.0
+I0323 01:41:33.300435       1 server.go:145] "Golang settings" GOGC="" GOMAXPROCS="" GOTRACEBACK=""
+I0323 01:41:33.546185       1 shared_informer.go:313] Waiting for caches to sync for node_authorizer
+W0323 01:41:33.548035       1 logging.go:55] [core] [Channel #1 SubChannel #3]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:2379", ServerName: "127.0.0.1:2379", }. Err: connection error: desc = "transport: authentication handshake failed: tls: failed to verify certificate: x509: certificate signed by unknown authority"
+W0323 01:41:33.548333       1 logging.go:55] [core] [Channel #2 SubChannel #4]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:2379", ServerName: "127.0.0.1:2379", }. Err: connection error: desc = "transport: authentication handshake failed: tls: failed to verify certificate: x509: certificate signed by unknown authority"
+I0323 01:41:33.554572       1 shared_informer.go:313] Waiting for caches to sync for *generic.policySource[*k8s.io/api/admissionregistration/v1.ValidatingAdmissionPolicy,*k8s.io/api/admissionregistration/v1.ValidatingAdmissionPolicyBinding,k8s.io/apiserver/pkg/admission/plugin/policy/validating.Validator]
+I0323 01:41:33.562095       1 plugins.go:157] Loaded 13 mutating admission controller(s) successfully in the following order: NamespaceLifecycle,LimitRanger,ServiceAccount,NodeRestriction,TaintNodesByCondition,Priority,DefaultTolerationSeconds,DefaultStorageClass,StorageObjectInUseProtection,RuntimeClass,DefaultIngressClass,MutatingAdmissionPolicy,MutatingAdmissionWebhook.
+I0323 01:41:33.562123       1 plugins.go:160] Loaded 13 validating admission controller(s) successfully in the following order: LimitRanger,ServiceAccount,PodSecurity,Priority,PersistentVolumeClaimResize,RuntimeClass,CertificateApproval,CertificateSigning,ClusterTrustBundleAttest,CertificateSubjectRestriction,ValidatingAdmissionPolicy,ValidatingAdmissionWebhook,ResourceQuota.
+I0323 01:41:33.562318 
+```
+
+According to the logs, we know the ca for ectd for the kube-apiserver is configured incorrectly.
+Modify it to the correct one, then the kube-apiserver works as expect. 
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 192.168.117.19:6443
+  creationTimestamp: null
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+    - command:
+        - kube-apiserver
+        - --advertise-address=192.168.117.19
+        - --allow-privileged=true
+        - --authorization-mode=Node,RBAC
+        - --client-ca-file=/etc/kubernetes/pki/ca.crt
+        - --enable-admission-plugins=NodeRestriction
+        - --enable-bootstrap-token-auth=true
+        - --etcd-cafile=/etc/kubernetes/pki/ca.crt # error one, this ca.crt is k8s <-> kube-apiserver
+        - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt # and this one should be the correct one   
+```
